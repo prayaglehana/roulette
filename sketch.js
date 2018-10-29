@@ -26,7 +26,7 @@ if (typeof web3 !== 'undefined') {
 
 var rouletteContract = web3.eth.contract ([{"constant":false,"inputs":[],"name":"claimReward","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"X","type":"uint8"}],"name":"get_number","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"registerMe","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"spin_wheel","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":true,"inputs":[],"name":"bet_no","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"person1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"person2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"r","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"regTill","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"winRatio","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"}]);
 //helo
-var roulette = rouletteContract.at('0x99c952f1752237ade6e961e7173fa9a158a14829');
+var roulette = rouletteContract.at('0x96a71238fc9605eaecf117db26471dc24fc0c372');
 
 web3.eth.defaultAccount=web3.eth.accounts[0]
 
@@ -428,7 +428,13 @@ $("#start").click(function(){
 function mousePressed() {
     if (bet_no>0) {
       console.log(bet_no);
-      roulette.get_number(bet_no,{from: web3.eth.accounts[0], gas:1000000}); 
+      roulette.get_number(bet_no,function(err,res){
+          if(!error){
+              console.log('bet has been set');
+          }
+          else
+            console.error('error');
+      }); 
     } else {
       console.log(bet_no);
     }
