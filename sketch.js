@@ -24,12 +24,36 @@ if (typeof web3 !== 'undefined') {
 
 
 
-var rouletteContract = web3.eth.contract ([{"constant":false,"inputs":[],"name":"claimReward","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"X","type":"uint8"}],"name":"get_number","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"registerMe","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[],"name":"spin_wheel","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":true,"inputs":[],"name":"bet_no","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"person1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"person2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"r","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"regTill","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"winRatio","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"}]);
+var rouletteContract = web3.eth.contract ([{"constant":true,"inputs":[],"name":"regTill","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"person1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"spin_wheel","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"person2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"r","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"X","type":"uint8"}],"name":"get_number","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"winRatio","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"registerMe","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"bet_no","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claimReward","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"r_","type":"uint8"},{"indexed":false,"name":"winRatio_","type":"uint8"}],"name":"spin_wheel_event","type":"event"}]);
 //helo
-var roulette = rouletteContract.at('0x96a71238fc9605eaecf117db26471dc24fc0c372');
+var roulette = rouletteContract.at('0xf5d346b20ad3b72bb155c59f12fe6fd4155704eb');
 
 web3.eth.defaultAccount=web3.eth.accounts[0]
+spin_wheel_event.watch(function(error,res){
+    if(!error){
+        f=get_acc(res.args.r_);
+        f_is_set=true;
+        inc=5;
+        start=true;
+        $("#r_id").html('r'+str(res.args.r_));
 
+        $("#win_ratio").html('win ratio'+str(res.args.winRatr));
+      
+    //      roulette.r.call(function(err, res){	
+	//  	if(!err){
+    //             f=get_acc(res);
+    //             f_is_set=true;
+    //             $("#r_id").html('r'+str(res));
+    //          }});
+             
+    // roulette.winRatio.call(function(err, res){	
+    //             if(!err){
+    //                      console.log('win_ratio'+res);
+    //                    $("#win_ratio").html('win ratio'+str(res));
+                 
+    //                 }});
+    }
+});
 
 function setup() {
 
@@ -63,8 +87,7 @@ function draw() {
 
     bet_no=draw_rect_and_get_bet_no(2.22*width/5,96,w,h);
    
-    
-    
+        
     draw_ellipse();
     if(start==true && f_is_set==true)
         {   console.log(inc);
@@ -397,9 +420,9 @@ $("#regme").click(function(){
 });
 $("#start").click(function(){
     console.log('start is called');
-    start=true;
+ 
     //wheel_sound.play();
-    inc=5;
+    
     roulette.spin_wheel(function(error, result){
         if(!error)
             {   
@@ -409,19 +432,7 @@ $("#start").click(function(){
             console.error(error);
     });   
 
-    roulette.r.call(function(err, res){	
-	 	if(!err){
-                f=get_acc(res);
-                f_is_set=true;
-                $("#r_id").html('r'+str(res));
-             }});
-             
-    roulette.winRatio.call(function(err, res){	
-                if(!err){
-                         console.log('win_ratio'+res);
-                       $("#win_ratio").html('win ratio'+str(res));
-                 
-                    }});
+   
     
 });
 
