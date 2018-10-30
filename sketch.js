@@ -8,7 +8,7 @@ var bet_no;
 var wheel_sound;
 var f_is_set;
 var f;
-inc=6;
+var inc_theta=6;
 
 w=550;
 h=268;
@@ -26,7 +26,7 @@ if (typeof web3 !== 'undefined') {
 
 var rouletteContract = web3.eth.contract ([{"constant":true,"inputs":[],"name":"regTill","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"person1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"spin_wheel","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"person2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"r","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"X","type":"uint8"}],"name":"get_number","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"winRatio","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"registerMe","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"bet_no","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claimReward","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"r_","type":"uint8"},{"indexed":false,"name":"winRatio_","type":"uint8"}],"name":"spin_wheel_event","type":"event"}]);
 //helo
-var roulette = rouletteContract.at('0x998151e1468e6676cd2ce4e10b0035d5f2d196f4');
+var roulette = rouletteContract.at('0xe9cc8a87b3d1989ba0e3d5c34f1df339f5debcea');
 
 web3.eth.defaultAccount=web3.eth.accounts[0];
 var spin_wheel_event_= roulette.spin_wheel_event();
@@ -68,14 +68,14 @@ function draw() {
         
     draw_ellipse();
     if(start==true && f_is_set==true)
-        {   console.log('inc'+inc);
-            if(inc<0){start=false;
+        {   console.log('inc'+inc_theta);
+            if(inc_theta<0){start=false;
      //   wheel_sound.stop();
                   }
             
-            theta=theta+in_rad(inc);
+            theta=theta+in_rad(inc_theta);
             
-            inc=inc-(f);
+            inc_theta=inc_theta-(f);
             if(theta>=in_rad(360)){theta=0;}
 
     }
@@ -405,7 +405,7 @@ spin_wheel_event_.watch(function(error,res){
         
         f=get_acc(res.args.r_);
         f_is_set=true;
-        inc=5;
+        inc_theta=6;
         start=true;
       
     //      roulette.r.call(function(err, res){	
