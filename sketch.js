@@ -26,7 +26,7 @@ if (typeof web3 !== 'undefined') {
 
 var rouletteContract = web3.eth.contract ([{"constant":true,"inputs":[],"name":"regTill","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"person1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"spin_wheel","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"person2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"r","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"X","type":"uint8"}],"name":"get_number","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"winRatio","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"registerMe","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"bet_no","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claimReward","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"r_","type":"uint8"},{"indexed":false,"name":"winRatio_","type":"uint8"}],"name":"spin_wheel_event","type":"event"}]);
 //helo
-var roulette = rouletteContract.at('0x8f2cc58be8fc17f4ce32031b18de04152f9c9708');
+var roulette = rouletteContract.at('0x998151e1468e6676cd2ce4e10b0035d5f2d196f4');
 
 web3.eth.defaultAccount=web3.eth.accounts[0];
 var spin_wheel_event_= roulette.spin_wheel_event();
@@ -445,7 +445,7 @@ function mousePressed() {
     if (bet_no>0) {
       console.log(bet_no);
       roulette.get_number(bet_no,function(err,res){
-          if(!error){
+          if(!err){
               console.log('bet has been set');
           }
           else
