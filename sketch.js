@@ -8,7 +8,7 @@ var bet_no;
 var wheel_sound;
 var f_is_set;
 var f;
-var inc_theta=6;
+var inc_theta=5;
 
 w=550;
 h=268;
@@ -26,7 +26,7 @@ if (typeof web3 !== 'undefined') {
 
 var rouletteContract = web3.eth.contract ([{"constant":true,"inputs":[],"name":"regTill","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"person1","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"spin_wheel","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"person2","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"r","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"X","type":"uint8"}],"name":"get_number","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"winRatio","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"registerMe","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"bet_no","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"claimReward","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"r_","type":"uint8"},{"indexed":false,"name":"winRatio_","type":"uint8"}],"name":"spin_wheel_event","type":"event"}]);
 //helo
-var roulette = rouletteContract.at('0x0850f7ec6341157060345d9dd0adf853757ef8cb');
+var roulette = rouletteContract.at('0x4daa3c1b6960a97023e211bc52ea35f124c1f068');
 
 web3.eth.defaultAccount=web3.eth.accounts[0];
 var spin_wheel_event_= roulette.spin_wheel_event();
@@ -405,7 +405,7 @@ spin_wheel_event_.watch(function(error,res){
         
         f=get_acc(res.args.r_);
         f_is_set=true;
-        inc_theta=6;
+        inc_theta=5;
         start=true;
 
     
